@@ -23,8 +23,6 @@ public class TileScript : MonoBehaviour
         anim = GetComponent<Animator>();
         hexGrid = GameObject.FindGameObjectWithTag("Grid");
 
-        Debug.Log(hexGrid.transform);
-
         selectedTileScript = hexGrid.GetComponent<SelectedTile>();
         tankScript = tank.GetComponent<TankScript>();
     }
@@ -40,7 +38,5 @@ public class TileScript : MonoBehaviour
         anim.Play(0);
         
         selectedTileScript.UpdateTileHighlight(highlightedHex);
-        // selectedTileScript.UpdateTileHighlight(highlightedHex);
-        // selectedTileScript.currentSelectedTile = highlightedHex;
     }
 }

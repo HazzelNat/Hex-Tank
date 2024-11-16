@@ -8,6 +8,7 @@ TagManager:
   - Tank
   - Highlight
   - Grid
+  - EnemyTank
   layers:
   - Default
   - TransparentFX

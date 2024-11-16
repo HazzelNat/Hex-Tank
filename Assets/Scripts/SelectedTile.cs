@@ -7,16 +7,20 @@ using UnityEngine.UIElements;
 public class SelectedTile : MonoBehaviour
 {
     public List<GameObject> alliedTanks = new List<GameObject>();
+
     public GameObject selectedShootTile;
     public GameObject selectedMoveTile;
     public GameObject currentSelectedTile;
     public GameObject tankPanel;
     public GameObject selectedTank;
     TankScript tankScript;
+    HexGenerate hexGenerate;
+    public List<GameObject> hexGrids;
 
     void Start()
     {
         tankScript = alliedTanks[0].GetComponent<TankScript>();
+        hexGrids = GetComponent<HexGenerate>().hexGrids;
     }
 
     void Update()
@@ -30,24 +34,25 @@ public class SelectedTile : MonoBehaviour
                 }
             }
         }
+
+        if(tankScript.state == TankScript.State.ClickToMove){
+            HighlightNeighbours(currentSelectedTile);
+        }
     }
 
     public void UpdateTileHighlight(GameObject highlightedHex)
     {
         if(selectedTank == null){
             if(currentSelectedTile == null){
-                Debug.Log("Kosong");
                 currentSelectedTile = highlightedHex;
                 currentSelectedTile.SetActive(true);
             }
 
             if(currentSelectedTile.activeSelf == true){
-                Debug.Log("Masih nyala");
                 currentSelectedTile.SetActive(true);
             }
 
             if(currentSelectedTile != highlightedHex){
-                Debug.Log("beda/null nyala");
                 currentSelectedTile.SetActive(false);
                 currentSelectedTile = highlightedHex;
                 currentSelectedTile.SetActive(true);
@@ -80,10 +85,9 @@ public class SelectedTile : MonoBehaviour
                     selectedShootTile = highlightedHex;
 
                     selectedShootTile.SetActive(true);
-
                     tankScript.selectedShootTile = selectedShootTile;
 
-                    break;    
+                    break;
 
                 case TankScript.State.Shooting:
                     Debug.Log("Still Shooting");
@@ -97,5 +101,12 @@ public class SelectedTile : MonoBehaviour
     {
         selectedTank = tank;
         tankScript.selectedTank = tank;
+    }
+
+    
+
+    public void HighlightNeighbours(GameObject centerGrid)
+    {
+        
     }
 }

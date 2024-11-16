@@ -12,6 +12,9 @@ public class PlayerController : MonoBehaviour
     TileScript lastHit;
     TankScript tankScript;
     MovableTile movableTile;
+    public Transform objectHit;
+
+    public Ray ray;
     void Start()
     {
         cam = GetComponent<Camera>();
@@ -26,14 +29,13 @@ public class PlayerController : MonoBehaviour
 
     public void CheckClick()
     {
-        if(Input.GetMouseButtonDown(0))
-        {   
-            RaycastHit hit;
-            Vector3 mousePos = Input.mousePosition;
-            Ray ray = cam.ScreenPointToRay(mousePos);
-            
+        RaycastHit hit;
+        Vector3 mousePos = Input.mousePosition;
+        ray = cam.ScreenPointToRay(mousePos);
+
+        if(Input.GetMouseButtonDown(0)){
             if(Physics.Raycast(ray, out hit)){
-                Transform objectHit = hit.transform;
+                objectHit = hit.transform;
 
                 if(objectHit.TryGetComponent<TileScript>(out TileScript hexTile)){
                     hexTile.OnSelected();

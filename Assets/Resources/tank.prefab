@@ -674,6 +674,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6542272617072439083}
   - component: {fileID: 5983954931291637503}
+  - component: {fileID: 4454604109391896983}
   m_Layer: 0
   m_Name: tank
   m_TagString: Tank
@@ -689,7 +690,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2113673564874813865}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: -0.86602545, z: 0, w: 0.49999994}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 0.23, y: 0.23, z: 0.23}
   m_ConstrainProportionsScale: 1
@@ -719,8 +720,9 @@ Transform:
   - {fileID: 2972939207833460565}
   - {fileID: 8609623976528542605}
   - {fileID: 1484996968936151925}
+  - {fileID: 5607871559277545097}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: -120, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &5983954931291637503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -733,7 +735,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6446a0bdf3c65ed42a44a7376acea4c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfTanks: 0
+  selectedTank: {fileID: 0}
+  bullet: {fileID: 8613951798640265557, guid: 93dbf8ed38d04c24a873da29e81defb2, type: 3}
+  firePoint: {fileID: 0}
+  tankPanel: {fileID: 0}
+  moveButton: {fileID: 0}
+  shootButton: {fileID: 0}
+  selectedTile: {fileID: 0}
+  selectedMoveTile: {fileID: 0}
+  selectedMoveTileParent: {fileID: 0}
+  selectedShootTile: {fileID: 0}
+  cam: {fileID: 0}
+  state: 0
+--- !u!65 &4454604109391896983
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2113673564874813865}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 4.7783074, y: 4.557333, z: 3.315742}
+  m_Center: {x: -0.2238854, y: 2.6998417, z: 0.15642072}
 --- !u!1 &2276757615364432419
 GameObject:
   m_ObjectHideFlags: 0
@@ -901,6 +935,37 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &3793337913077099280
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5607871559277545097}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5607871559277545097
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3793337913077099280}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
+  m_LocalPosition: {x: -3.4, y: 4.3, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6542272617072439083}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!1 &3846759398313084646
 GameObject:
   m_ObjectHideFlags: 0
