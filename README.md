@@ -18,7 +18,7 @@ This project using Unity 2022.3.22f1
 
 | **Role** | **Name** | **Development Time** 
 |:-|:-|:-|
-| Game Programmer | Hazzel Nathaniel Wu | 7 Days |
+| Game Programmer | Hazzel Nathaniel Wu | WIP |
 
 ##  📜 FEATURES
 
