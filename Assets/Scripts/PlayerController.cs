@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Experimental.AI;
 using UnityEngine.Tilemaps;
 using UnityEngine.UIElements;
 
@@ -11,7 +13,11 @@ public class PlayerController : MonoBehaviour
 
     TileScript lastHit;
     TankScript tankScript;
-    MovableTile movableTile;
+    public Transform objectHit;
+    [SerializeField] private LayerMask placementLayerMask;
+    public Vector3 worldPosition;
+
+    public Ray ray;
     void Start()
     {
         cam = GetComponent<Camera>();
@@ -26,15 +32,18 @@ public class PlayerController : MonoBehaviour
 
     public void CheckClick()
     {
-        if(Input.GetMouseButtonDown(0))
-        {   
-            RaycastHit hit;
-            Vector3 mousePos = Input.mousePosition;
-            Ray ray = cam.ScreenPointToRay(mousePos);
-            
-            if(Physics.Raycast(ray, out hit)){
-                Transform objectHit = hit.transform;
+        RaycastHit hit;
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = cam.nearClipPlane + 1;
 
+        ray = cam.ScreenPointToRay(mousePos);
+
+        worldPosition = cam.ScreenToWorldPoint(mousePos);
+        
+        if(Physics.Raycast(ray, out hit, 100, placementLayerMask)){
+            objectHit = hit.transform;
+
+            if(Input.GetMouseButtonDown(0)){
                 if(objectHit.TryGetComponent<TileScript>(out TileScript hexTile)){
                     hexTile.OnSelected();
                     lastHit = hexTile;

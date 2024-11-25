@@ -11,8 +11,7 @@ GameObject:
   - component: {fileID: 8896312445886196018}
   - component: {fileID: 8809889007366928881}
   - component: {fileID: 1469239289209545293}
-  - component: {fileID: 4923654820537712033}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: HighlightedHex
   m_TagString: Highlight
   m_Icon: {fileID: 0}
@@ -84,19 +83,6 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &4923654820537712033
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1907769174593821264}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e4fdfd3cf4413e34382e9005e708a1c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  highlightedHex: {fileID: 1907769174593821264}
 --- !u!1 &8936871924382051567
 GameObject:
   m_ObjectHideFlags: 0
@@ -112,7 +98,7 @@ GameObject:
   - component: {fileID: 2548325219322617764}
   - component: {fileID: 3620336503340630321}
   - component: {fileID: 6748579091469622993}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: hex_grass 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -258,3 +244,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   highlightedHex: {fileID: 1907769174593821264}
   tank: {fileID: 2113673564874813865, guid: 20829bfd80db97246aa575f1c12641ca, type: 3}
+  xCoordinate: 0
+  zCoordinate: 0

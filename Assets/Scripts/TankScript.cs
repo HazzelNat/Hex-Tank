@@ -7,18 +7,6 @@ using UnityEngine.UI;
 
 public class TankScript : MonoBehaviour
 {
-    public GameObject selectedTank;
-    public GameObject selectedTile;
-    SelectedTile selectedTileScript;
-    public GameObject tankPanel;
-    public GameObject selectedMoveTile;
-    public GameObject selectedMoveTileParent;
-    public GameObject selectedShootTile;
-    HexGenerate hexGenerate;
-
-    public Button moveButton;
-    public Button shootButton;
-
     public enum State{
         Idle,
         Selected,
@@ -29,13 +17,44 @@ public class TankScript : MonoBehaviour
         Waiting
     }
 
-    public State state;
+    [Header("Tank Component")]
+    public GameObject selectedTank;
+    public GameObject bullet;
+    public GameObject firePoint;
+    float[] allowedRotation = {0, };
+
+    [Header("UI Tank Component")]
+    public GameObject tankPanel;
+    public Button moveButton;
+    public Button shootButton;
+
+    [Header("Tile Component")]
+    SelectedTile selectedTileScript;
+    public GameObject hexGrid;
+    public GameObject selectedTile;
+    public GameObject selectedMoveTile;
+    public GameObject selectedMoveTileParent;
+    public GameObject selectedShootTile;
+    HexGenerate hexGenerate;
+
+    [Header("Camera Component")]
+    [SerializeField] public GameObject cam;
     PlayerController playerController;
-    bool alreadyMoved = false;
+    RaycastHit hit;
+    Transform objectHit;
+
+    [Header("Checks")]
+    public State state;
+    public bool alreadyMoved = false;
+    public bool alreadyShot = false;
+    public bool alreadyHit = false;
+    public bool myBullet = false;
 
     void Start()
     {
         hexGenerate = GetComponent<HexGenerate>();
+        playerController = cam.GetComponent<PlayerController>();
+        selectedTileScript = hexGrid.GetComponent<SelectedTile>();
     }
 
     void Update()
@@ -48,11 +67,6 @@ public class TankScript : MonoBehaviour
 
     public void CheckState()
     {
-        if(selectedTank && state == State.Idle){
-            ChangeState(State.Selected);
-        } else if(!selectedTank && state == State.Selected){
-            ChangeState(State.Idle);
-        }
     }
 
     public void StateBehaviour()
@@ -67,12 +81,12 @@ public class TankScript : MonoBehaviour
                 break;
 
             case State.ClickToMove:
-                if(selectedMoveTile == null){
-                    Debug.Log("Kosong klik");
-                } else if(selectedMoveTile != null){
+                if(selectedMoveTile != null){
                     ChangeState(State.Moving);
-                    Debug.Log("Target Locked");
                 }
+
+                RotateTank();
+
                 break;
 
             case State.Moving:
@@ -80,19 +94,42 @@ public class TankScript : MonoBehaviour
                 
                 break;
 
-            case State.Shooting:
+            case State.ClickToShoot:
+                if(selectedShootTile != null){
+                    Debug.Log("Ganti Shoot");
+                    ChangeState(State.Shooting);
+                }
 
+                RotateTank();
+
+                break;    
+
+            case State.Shooting:
+                Shoot();
                 break;
+
+            case State.Waiting:
+                RestartValue();
+                tankPanel.SetActive(false);
+                break;    
         }
     }
 
     public void Idle()
     {
         tankPanel.SetActive(false);
+
+        if(selectedTank){
+            ChangeState(State.Selected);
+        }
     }
 
     public void Selected()
     {
+        if(!selectedTank){
+            ChangeState(State.Idle);
+        }
+
         tankPanel.SetActive(true);
 
         moveButton.onClick.AddListener(OnClickMove);
@@ -101,17 +138,16 @@ public class TankScript : MonoBehaviour
     }
 
     public void Move(){
-        // Vector3 target = selectedMoveTile.position;
-
         selectedMoveTileParent = selectedMoveTile.transform.parent.gameObject;
 
-        if(selectedMoveTileParent.transform.position.x != selectedTank.transform.position.x && selectedMoveTileParent.transform.position.z != selectedTank.transform.position.z){
-            selectedTank.transform.position = new Vector3(selectedMoveTileParent.transform.position.x, 1, selectedMoveTileParent.transform.position.z);
-        } else if(selectedMoveTileParent.transform.position.x == selectedTank.transform.position.x && selectedMoveTileParent.transform.position.z == selectedTank.transform.position.z){
+        if(selectedMoveTileParent.transform.position.x == selectedTank.transform.position.x && selectedMoveTileParent.transform.position.z == selectedTank.transform.position.z){
             selectedMoveTile = null;
             selectedMoveTileParent = null;
             alreadyMoved = true;
             ChangeState(State.Selected);
+            
+        } else {
+            selectedTank.transform.position = new Vector3(selectedMoveTileParent.transform.position.x, 1, selectedMoveTileParent.transform.position.z);
         }
 
         if(alreadyMoved){
@@ -120,12 +156,21 @@ public class TankScript : MonoBehaviour
     }
 
     public void Shoot(){
-
+        if(!alreadyShot){
+            Instantiate(bullet, firePoint.transform.position, Quaternion.Euler(90f, 0f, 90f));
+            
+            alreadyShot = true;
+        } else {
+            if(alreadyHit){
+                selectedTileScript.selectedShootTile.SetActive(false);
+                selectedTileScript.currentSelectedTile.SetActive(false);
+                ChangeState(State.Waiting);
+            }
+        }
     }
 
     private void OnClickMove()
     {
-        Debug.Log("KLIK JALAN");
         ChangeState(State.ClickToMove);
     }
 
@@ -139,8 +184,17 @@ public class TankScript : MonoBehaviour
         state = currentState;
     }
 
+    void RotateTank()
+    {
+        Transform lastObjectHit = playerController.objectHit;        
+
+        transform.LookAt(lastObjectHit);
+    }
+
     public void RestartValue()
     {
         alreadyMoved = false;
+        alreadyShot = false;
+        alreadyHit = false;
     }
 }

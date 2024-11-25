@@ -39,14 +39,16 @@ public class HexGenerate : MonoBehaviour
             x -= hexSize;
             z -= Mathf.RoundToInt((hexSize/2)-1);
             hexLocation = new Vector3(x, 1f, z*1.73f);
+            spawnedTiles = Instantiate(gridInfo.hexPrefab, hexLocation, transform.rotation);
+            FormatHex(x, z);
         } else if(z%2 == 1){
             x -= hexSize;
             z -= Mathf.RoundToInt((hexSize/2)-1);
             hexLocation = new Vector3(x+1, 1f, z*1.73f);
+            spawnedTiles = Instantiate(gridInfo.hexPrefab, hexLocation, transform.rotation);
+            FormatHex(x+1, z);
         }
         
-        spawnedTiles = Instantiate(gridInfo.hexPrefab, hexLocation, transform.rotation) as GameObject;
-        FormatHex(x, z);
         
     }
 
@@ -54,7 +56,12 @@ public class HexGenerate : MonoBehaviour
     {
         string xCoordinates = x.ToString();                                                         // Change name
         string zCoordinates = z.ToString();
-        spawnedTiles.name = string.Format("Tile {0}, {1}", xCoordinates, zCoordinates);             
+        spawnedTiles.name = string.Format("Tile {0}, {1}", xCoordinates, zCoordinates);
+        
+        TileScript spawnedTileScript = spawnedTiles.GetComponent<TileScript>();
+
+        spawnedTileScript.xCoordinate = Mathf.RoundToInt(x);
+        spawnedTileScript.zCoordinate = Mathf.RoundToInt(z);
 
         spawnedTiles.transform.parent = transform;                                                  // Add as a child of HexGrid
 
