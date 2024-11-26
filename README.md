@@ -8,7 +8,7 @@
 Hex Tank is a 3D turn-based hex-tiled tactics game with tanks. Defeat other tanks to remain victorious!
 
 ## 🎥 GAMEPLAY
-<img src="" alt="1" style="width:100%;height:auto;">
+<img src="https://github.com/HazzelNat/HazzelNat/blob/main/Hex%20Tank.gif" alt="1" style="width:100%;height:auto;">
 
 ## 🎮 DOWNLOAD
 Itch.io : Coming Soon!
