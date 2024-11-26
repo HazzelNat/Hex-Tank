@@ -1,5 +1,5 @@
 <p align="center">
-  <img width="100%" alt="HexTank" src="">  <!--FOTO-->
+  <img width="100%" alt="HexTank" src="https://github.com/HazzelNat/HazzelNat/blob/main/Screenshot%202024-11-26%20070246.png">  <!--FOTO-->
   </br>
 </p>
 
